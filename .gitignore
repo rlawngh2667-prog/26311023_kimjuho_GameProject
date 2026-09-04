@@ -17,6 +17,13 @@
 # Debugger Files
 *.pdb
 
+# Visual Studio user cache
+.vs/
+*.ipch
+*.suo
+*.VC.db
+*.vsidx
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
