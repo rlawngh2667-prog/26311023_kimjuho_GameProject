@@ -1,55 +1,75 @@
-# Visual Studio workspace and user files
-.vs/
-**/.vs/
-.vscode/
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-*.VC.db
-*.opensdf
-*.vsidx
+########################################
+# unreal
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+Plugins/*/Intermediate/
+Plugins/*/Binaries/
+StarterContent/
+*/Content/ThirdPerson/
+*/Content/Characters/
 
-# C and C++ intermediate files
-*.obj
-*.idb
-*.ilk
-*.ipch
-*.pch
-*.tlog
-*.recipe
-*.log
+########################################
+# svn
+.svn/
 
-# Build output directories
-Debug/
-Release/
-x64/
-Win32/
+########################################
+# Visual Studio
 _LIB/
 _OBJ/
 _bin/
-build/
-Build/
-build-*/
-
-# Restored NuGet packages
+Debug/
+Release/
 packages/
-**/packages/
-
-# Compiled binaries and libraries
-*.exe
-*.dll
-*.lib
+.vs/
+.vscode/
+.tlog/
+**/obj/
+UpgradeLog.htm
+*.tlog
+*.idb
+*.ilk
+*.recipe
+*.log
+*.obj
 *.pdb
-*.out
+*.sln.docstates
+*.user
+*.userosscache
+*.suo
+*.VC.db
+*.opensdf
 
-# Temporary files
-*.tmp
-*.bak
-*.swp
+########################################
+# android studio
+.gradle/
+.cxx/
+build/
+**/main/assets/
+.externalNativeBuild/
 
-# IDE and operating system files
-.idea/
+########################################
+# xcode
+*.xcuserstate
+**/DerivedData/
+**/xcuserdata/
+
+########################################
+# Rider
+.idea
+JetBrains/
+JetBrains.meta
 _ReSharper.Caches/
+
+########################################
+# OS
+.github
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
