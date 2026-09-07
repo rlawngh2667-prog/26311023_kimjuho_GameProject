@@ -8,7 +8,7 @@ GameManager g_gameManager;
 
 void GameManager::Init(int startingCash)
 {
-    playerCash = startingCash;
+    playerCash = startingCash;      
     StartGame();
 }
 
