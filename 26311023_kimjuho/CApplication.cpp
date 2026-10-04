@@ -1,4 +1,4 @@
-#include "CApplication.h"
+ï»¿#include "CApplication.h"
 #include "glc2d.h"
 
 #include <cstdio>
@@ -96,6 +96,7 @@ int CApplication::Init()
 	g2_SetRender(AppRender);
 
 	LoadTextures();
+	LoadSounds();
 	g_gameManager.Init(1000);
 
 	printf("Blackjack started.\n");
@@ -132,6 +133,7 @@ int CApplication::Render()
 
 int CApplication::Destroy()
 {
+	ReleaseSounds();
 	ReleaseTextures();
 	g2_DestroyWin();
 
@@ -188,6 +190,43 @@ void CApplication::ReleaseTextures()
 	}
 }
 
+void CApplication::LoadSounds()
+{
+	cardSound = g2_SoundLoad("resource/sounds/card.wav");
+	bgmSound = g2_SoundLoad("resource/sounds/casino_jazz.mp3");
+
+	if (bgmSound >= 0)
+	{
+		g2_SoundPlay(bgmSound, true);
+	}
+}
+
+void CApplication::ReleaseSounds()
+{
+	if (cardSound >= 0)
+	{
+		g2_SoundRelease(cardSound);
+		cardSound = -1;
+	}
+
+	if (bgmSound >= 0)
+	{
+		g2_SoundRelease(bgmSound);
+		bgmSound = -1;
+	}
+}
+
+void CApplication::PlayCardSound()
+{
+	if (cardSound < 0)
+	{
+		return;
+	}
+
+	g2_SoundReset(cardSound);
+	g2_SoundPlay(cardSound);
+}
+
 void CApplication::HandleInput()
 {
 	const KEYCODE* keyboard = g2_GetKeyboard();
@@ -208,31 +247,53 @@ void CApplication::HandleInput()
 	if (IsNewKeyPress(keyboard, '1', previousBetKey))
 	{
 		const int amount = 100;
-		g_gameManager.PlayerBet(amount);
+		if (g_gameManager.PlayerBet(amount))
+		{
+			PlayCardSound();
+		}
 	}
 	if(IsNewKeyPress(keyboard, '2', previousBetKey))
 	{
 		const int amount = 200;
-		g_gameManager.PlayerBet(amount);
+		if (g_gameManager.PlayerBet(amount))
+		{
+			PlayCardSound();
+		}
 	}
 	if(IsNewKeyPress(keyboard, '3', previousBetKey))
 	{
 		const int amount = 400;
-		g_gameManager.PlayerBet(amount);
+		if (g_gameManager.PlayerBet(amount))
+		{
+			PlayCardSound();
+		}
 	}
 	if(IsNewKeyPress(keyboard, 'A', previousBetKey))
 	{
 		const int amount = g_gameManager.GetPlayerCash();
-		g_gameManager.PlayerBet(amount);
+		if (g_gameManager.PlayerBet(amount))
+		{
+			PlayCardSound();
+		}
 	}
 	if (IsNewKeyPress(keyboard, 'H', previousHitKey))
 	{
-		g_gameManager.PlayerHit();
+		if (g_gameManager.PlayerHit())
+		{
+			PlayCardSound();
+		}
 	}
 
 	if (IsNewKeyPress(keyboard, 'S', previousStandKey))
 	{
-		g_gameManager.PlayerStand();
+		const std::size_t dealerCardCount =
+			g_gameManager.GetDealerHand().size();
+
+		if (g_gameManager.PlayerStand() &&
+			g_gameManager.GetDealerHand().size() > dealerCardCount)
+		{
+			PlayCardSound();
+		}
 	}
 
 	const bool canRestart =
@@ -279,7 +340,7 @@ void CApplication::DrawHand(
 	float y,
 	bool hideSecondCard)
 
-	//ÁøÂ¥ ·£´õ¸µ ¸ğ¸£°Ú¾î¼­ ÀÌ°Ç gpt µµ¿òÀ» ¹Ş¾Ò½À´Ï´Ù ÁøÂ¥ ÁË¼ÛÇÕ´Ï´Ù »ì·ÁÁÖ¼¼¿ä ÁøÂ¥ ¸ğ¸£°Ú¾î¿ä.
+	//ì§„ì§œ ëœë”ë§ ëª¨ë¥´ê² ì–´ì„œ ì´ê±´ gpt ë„ì›€ì„ ë°›ì•˜ìŠµë‹ˆë‹¤ ì§„ì§œ ì£„ì†¡í•©ë‹ˆë‹¤ ì‚´ë ¤ì£¼ì„¸ìš” ì§„ì§œ ëª¨ë¥´ê² ì–´ìš”.
 {
 	const float cardSpacing = CARD_WIDTH + CARD_GAP;
 	const float startX = GetHandStartX(hand.size());

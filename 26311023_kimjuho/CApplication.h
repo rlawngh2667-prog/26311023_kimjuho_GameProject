@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "TableGameManager.h"
 class CApplication
 {
@@ -16,6 +16,9 @@ private:
 	// 게임에 사용하는 테이블과 카드 텍스처를 준비하고 정리한다.
 	void LoadTextures();
 	void ReleaseTextures();
+	void LoadSounds();
+	void ReleaseSounds();
+	void PlayCardSound();
 
 	// 키보드 입력을 처리하고 현재 게임 정보를 창 제목에 표시한다.
 	void HandleInput();
@@ -35,6 +38,8 @@ private:
 	int tableTexture = -1;
 	int cardTextures[53] = {};
 	int backTexture = -1;
+	int cardSound = -1;
+	int bgmSound = -1;
 
 	bool previousBetKey = false;
 	bool previousHitKey = false;
